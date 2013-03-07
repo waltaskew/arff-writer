@@ -25,7 +25,7 @@ class FeatureFunction(object):
     for an ARFF file.
     """
     TO_STRING = {
-        'numberic': lambda x: str(float(x)),
+        'numeric': lambda x: str(float(x)),
         'integer': lambda x: str(float(int(x))),
         'real': lambda x: str(float(x)),
         'nominal': lambda x: '"%s"' % x.replace('"', r'\"'),
