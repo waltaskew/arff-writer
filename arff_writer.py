@@ -10,16 +10,6 @@ DATA_LINE = '@DATA'
 ATTRIBUTE_LINE = '@ATTRIBUTE %s %s'
 
 
-VALID_ATTRIBUTES = {
-        'numeric',
-        'integer',
-        'real',
-        'nominal',
-        'string',
-        'date'
-    }
-
-
 class FeatureFunction(object):
     """Thin wrapper around a function which generates features
     for an ARFF file.
@@ -38,7 +28,9 @@ class FeatureFunction(object):
         if attribute_name is None:
             attribute_name = func.__name__
 
-        if attribute_type == 'nominal' and nominals is None:
+        if attribute_type is not None and attribute_type not in self.TO_STRING:
+            raise ValueError('Unkonw attribute type %s given' % attribute_type)
+        elif attribute_type == 'nominal' and nominals is None:
             raise ValueError(
                 'Feature %s is of type nominal but declares no nominals set' %
                 attribute_name)
