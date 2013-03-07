@@ -94,11 +94,6 @@ def feature(fname=None, returns=None, nominals=None):
         """Adds nescessary weka attributes to a function."""
         if fname is None:
             name = func.__name__
-        if returns is None:
-            raise ValueError('No return type specifed for feature %s' % name)
-        elif returns not in VALID_ATTRIBUTES:
-            raise ValueError('Invalid return type %s for feature %s' %
-                    (returns, name))
 
         return FeatureFunction(
                 func,
@@ -144,7 +139,11 @@ def get_header(feature_funcs, relation_name):
 def write_feature_file(out_file_name, relation_name, module, input_vals):
     """Write an arff file."""
     funcs = find_feature_functions(module)
+
+    feature_vals = []
+    for features in get_feature_values(funcs, input_vals):
+        feature_vals.append(','.join(features))
+
     with open(out_file_name, 'w') as out_file:
         out_file.write(get_header(funcs, relation_name))
-        for features in get_feature_values(funcs, input_vals):
-            out_file.write(','.join(features) + '\n')
+        out_file.write('\n'.join(feature_vals))
