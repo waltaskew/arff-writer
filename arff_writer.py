@@ -139,3 +139,4 @@ def write_feature_file(out_file_name, relation_name, module, input_vals):
     with open(out_file_name, 'w') as out_file:
         out_file.write(get_header(funcs, relation_name))
         out_file.write('\n'.join(feature_vals))
+        out_file.write('\n')
