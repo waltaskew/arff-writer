@@ -97,9 +97,7 @@ def feature(fname=None, returns=None, nominals=None):
 
 
 def find_feature_functions(module):
-    """Return an iterator yielding all feature functions
-    on the given module.
-    """
+    """Return a list of all feature functions on the given module."""
     funcs = []
     for attr_name in dir(module):
         attr = getattr(module, attr_name)
