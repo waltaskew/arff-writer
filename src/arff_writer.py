@@ -56,7 +56,7 @@ class FeatureFunction(object):
 
         return ATTRIBUTE_LINE % (self.attribute_name, data_type)
 
-    def deduce_to_string_func(self, val):
+    def set_type_from_val(self, val):
         """Deduce the proper to_string function from the type of val."""
         if isinstance(val, basestring):
             attribute_type = 'string'
@@ -77,7 +77,7 @@ class FeatureFunction(object):
         """
         result = self.func(*args, **kwargs)
         if self.result_to_string is None:
-            self.deduce_to_string_func(result)
+            self.set_type_from_val(result)
         return self.result_to_string(result)
 
 
