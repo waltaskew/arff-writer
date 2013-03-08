@@ -58,7 +58,13 @@ class FeatureFunction(object):
 
     def set_type_from_val(self, val):
         """Deduce the proper to_string function from the type of val."""
-        if isinstance(val, basestring):
+        # Fun facts -- you have to check isinstance(val, bool) before
+        # isinstance(val, numbers.Number) because for unfathomable
+        # reasons, bool is an integer subclass.
+        if isinstance(val, bool):
+            attribute_type = 'nominal'
+            self.nominals = [str(True), str(False)]
+        elif isinstance(val, basestring):
             attribute_type = 'string'
         elif isinstance(val, numbers.Number):
             attribute_type = 'numeric'
