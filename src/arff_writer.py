@@ -48,7 +48,8 @@ class FeatureFunction(object):
     def attribute_string(self):
         """Return an attribute string for this feature."""
         if self.attribute_type == 'nominal':
-            data_type = '{%s}' % ','.join(nominal.replace('"', r'\"') for
+            data_type = '{%s}' % ','.join(
+                    '"%s"' % nominal.replace('"', r'\"') for
                     nominal in self.nominals)
         else:
             data_type = self.attribute_type
