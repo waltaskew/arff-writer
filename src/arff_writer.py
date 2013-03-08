@@ -59,16 +59,17 @@ class FeatureFunction(object):
     def deduce_to_string_func(self, val):
         """Deduce the proper to_string function from the type of val."""
         if isinstance(val, basestring):
-            self.result_to_string = self.TO_STRING['string']
-            self.attribute_type = 'string'
+            attribute_type = 'string'
         elif isinstance(val, numbers.Number):
-            self.result_to_string = self.TO_STRING['numeric']
-            self.attribute_type = 'numeric'
+            attribute_type = 'numeric'
         elif isinstance(val, (datetime.date, datetime.datetime)):
-            self.result_to_string = self.TO_STRING['date']
-            self.attribute_type = 'date'
+            attribute_type = 'date'
         else:
             raise ValueError("Unable to deduce ARFF type of %s" % val)
+
+        self.attribute_type = attribute_type
+        self.result_to_string = self.TO_STRING[attribute_type]
+        return attribute_type
 
     def __call__(self, *args, **kwargs):
         """Return the result of the wrapped function as a string
