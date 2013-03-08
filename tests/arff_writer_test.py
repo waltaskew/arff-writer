@@ -1,3 +1,4 @@
+#pylint: disable=R0904
 """Tests for the arff_writer module."""
 
 
@@ -8,7 +9,7 @@ import arff_writer
 
 
 class FeatureFunctionTest(unittest.TestCase):
-    """Tests for the arff_writer module."""
+    """Tests for the FeatureFunction class."""
 
     def test_attribute_string(self):
         """Test the attribute_string method."""
@@ -72,7 +73,7 @@ class FeatureFunctionTest(unittest.TestCase):
         feature_func.set_type_from_val(1)
         self.assertEqual(feature_func.attribute_type, 'numeric')
 
-        feature_func.set_type_from_val(datetime.datetime(1,1,1))
+        feature_func.set_type_from_val(datetime.datetime(1, 1, 1))
         self.assertEqual(feature_func.attribute_type, 'date')
 
         feature_func.set_type_from_val(True)
@@ -85,3 +86,35 @@ class FeatureFunctionTest(unittest.TestCase):
         result = feature_func()
         self.assertEqual(result, '1.0')
         self.assertEqual(feature_func.attribute_type, 'numeric')
+
+
+class ArfWriterTest(unittest.TestCase):
+    """Tests for the arff_writer module."""
+
+    def test_feature_decorator(self):
+        """Test the feature function's use as a decorator."""
+        #pylint: disable=E0102
+        #pylint: disable=C0111
+        #pylint: disable=C0321
+        @arff_writer.feature()
+        def test(): pass
+        self.assertEqual(test.attribute_name, 'test')
+
+        @arff_writer.feature(fname='moo')
+        def test(): pass
+        self.assertEqual(test.attribute_name, 'moo')
+
+        @arff_writer.feature(fname='moo', returns='string')
+        def test(): pass
+        self.assertEqual(test.attribute_name, 'moo')
+        self.assertEqual(test.attribute_type, 'string')
+
+        @arff_writer.feature(returns='nominal', nominals=['a', 'b'])
+        def test(): pass
+        self.assertEqual(test.attribute_name, 'test')
+        self.assertEqual(test.attribute_type, 'nominal')
+        self.assertEqual(test.nominals, ['a', 'b'])
+
+        with self.assertRaises(ValueError):
+            @arff_writer.feature(returns='nominal')
+            def test(): pass
