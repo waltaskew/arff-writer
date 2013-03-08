@@ -7,7 +7,7 @@ import unittest
 import arff_writer
 
 
-class ArffWriterTest(unittest.TestCase):
+class FeatureFunctionTest(unittest.TestCase):
     """Tests for the arff_writer module."""
 
     def test_attribute_string(self):
@@ -78,3 +78,10 @@ class ArffWriterTest(unittest.TestCase):
         feature_func.set_type_from_val(True)
         self.assertEqual(feature_func.attribute_type, 'nominal')
         self.assertEqual(feature_func.nominals, [str(True), str(False)])
+
+    def test_call(self):
+        """Test the __call__ method and its type inference magic."""
+        feature_func = arff_writer.FeatureFunction(lambda: 1)
+        result = feature_func()
+        self.assertEqual(result, '1.0')
+        self.assertEqual(feature_func.attribute_type, 'numeric')
