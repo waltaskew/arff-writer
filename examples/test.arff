@@ -1,0 +1,11 @@
+@RELATION test
+
+
+@ATTRIBUTE echo_snakes string
+@ATTRIBUTE just_two numeric
+@ATTRIBUTE echo string
+
+
+@DATA
+"a snakes",2.0,"a"
+"b snakes",2.0,"b"
