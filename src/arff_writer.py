@@ -103,13 +103,13 @@ def feature(fname=None, returns=None, nominals=None):
 
 
 def find_feature_functions(module):
-    """Return a list of all feature functions on the given module."""
-    funcs = []
+    """Return an interator yielding all feature functions
+    on the given module.
+    """
     for attr_name in dir(module):
         attr = getattr(module, attr_name)
         if isinstance(attr, FeatureFunction):
-            funcs.append(attr)
-    return funcs
+            yield attr
 
 
 def get_feature_values(feature_funcs, input_vals):
@@ -128,19 +128,25 @@ def get_header(feature_funcs, relation_name):
     for func in feature_funcs:
         lines.append(func.attribute_string())
     lines.append('\n')
-    lines.append(DATA_LINE + '\n')
+    lines.append(DATA_LINE)
     return '\n'.join(lines)
 
 
-def write_feature_file(out_file_name, relation_name, module, input_vals):
+def build_feature_file(relation_name, module, input_vals):
     """Write an arff file."""
-    funcs = find_feature_functions(module)
+    funcs = list(find_feature_functions(module))
 
     feature_vals = []
     for features in get_feature_values(funcs, input_vals):
         feature_vals.append(','.join(features))
 
+    contents = [get_header(funcs, relation_name)]
+    contents.extend(feature_vals)
+    return '\n'.join(contents)
+
+
+def write_feature_file(out_file_name, relation_name, module, input_vals):
+    """Write an arff file."""
     with open(out_file_name, 'w') as out_file:
-        out_file.write(get_header(funcs, relation_name))
-        out_file.write('\n'.join(feature_vals))
+        out_file.write(build_feature_file(relation_name, module, input_vals))
         out_file.write('\n')
