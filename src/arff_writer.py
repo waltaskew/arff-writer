@@ -92,8 +92,6 @@ def feature(fname=None, returns=None, nominals=None):
 
     def feature_maker(func):
         """Adds nescessary weka attributes to a function."""
-        if fname is None:
-            name = func.__name__
 
         return FeatureFunction(
                 func,
