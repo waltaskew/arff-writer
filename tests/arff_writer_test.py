@@ -139,5 +139,29 @@ class ArfWriterTest(unittest.TestCase):
 @ATTRIBUTE cows string
 
 
+@DATA""")
+
+    def test_build_feature_file(self):
+        """Test the build_feature_file"""
+
+        def fake_module():
+            pass
+        fake_module.snakes = arff_writer.FeatureFunction(
+                lambda x: 1,
+                attribute_name='snakes')
+        fake_module.cows = arff_writer.FeatureFunction(
+                lambda x: 'a',
+                attribute_name='cows')
+
+        self.assertEqual(arff_writer.build_feature_file(
+            'cake', fake_module, ['a', 'b']),
+"""@RELATION cake
+
+
+@ATTRIBUTE cows string
+@ATTRIBUTE snakes numeric
+
+
 @DATA
-""")
+"a",1.0
+"a",1.0""")
