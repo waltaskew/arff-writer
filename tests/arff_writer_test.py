@@ -118,3 +118,26 @@ class ArfWriterTest(unittest.TestCase):
         with self.assertRaises(ValueError):
             @arff_writer.feature(returns='nominal')
             def test(): pass
+
+    def test_get_header(self):
+        """Test the get_header function."""
+        funcs = [
+                arff_writer.FeatureFunction(
+                    lambda: 1,
+                    attribute_name='snakes',
+                    attribute_type='numeric'),
+                arff_writer.FeatureFunction(
+                    lambda: 'a',
+                    attribute_name='cows',
+                    attribute_type='string')
+            ]
+        self.assertEqual(arff_writer.get_header(funcs, 'cake'),
+"""@RELATION cake
+
+
+@ATTRIBUTE snakes numeric
+@ATTRIBUTE cows string
+
+
+@DATA
+""")
