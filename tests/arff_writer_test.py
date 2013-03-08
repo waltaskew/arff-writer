@@ -131,12 +131,14 @@ class ArfWriterTest(unittest.TestCase):
                     attribute_name='cows',
                     attribute_type='string')
             ]
-        self.assertEqual(arff_writer.get_header(funcs, 'cake'),
+        self.assertEqual(arff_writer.get_header(
+            funcs, 'cake', 'flavor', ['apple', 'cherry']),
 """@RELATION cake
 
 
 @ATTRIBUTE snakes numeric
 @ATTRIBUTE cows string
+@ATTRIBUTE flavor {"apple","cherry"}
 
 
 @DATA""")
@@ -154,14 +156,15 @@ class ArfWriterTest(unittest.TestCase):
                 attribute_name='cows')
 
         self.assertEqual(arff_writer.build_feature_file(
-            'cake', fake_module, ['a', 'b']),
-"""@RELATION cake
+            'cake', fake_module, [('a', 'apple'), ('b', 'banana')], 'flavor'),
+'''@RELATION cake
 
 
 @ATTRIBUTE cows string
 @ATTRIBUTE snakes numeric
+@ATTRIBUTE flavor {"apple","banana"}
 
 
 @DATA
-"a",1.0
-"a",1.0""")
+"a",1.0,"apple"
+"a",1.0,"banana"''')

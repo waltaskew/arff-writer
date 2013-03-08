@@ -116,16 +116,14 @@ def find_feature_functions(module):
             yield attr
 
 
-def get_feature_values(feature_funcs, input_vals):
-    """Return an iterator yielding the features for each input in the
-    list of input vals.
-    """
-    for input_val in input_vals:
-        yield [func(input_val) for func in feature_funcs]
-
-
-def get_header(feature_funcs, relation_name):
+def get_header(feature_funcs, relation_name, class_name, classifications):
     """Return a string representing the header of an ARFF file."""
+
+    classification_feature = FeatureFunction(
+            None, attribute_name=class_name,
+            attribute_type='nominal', nominals=classifications)
+    feature_funcs = feature_funcs + [classification_feature]
+
     lines = []
     lines.append(RELATION_LINE % relation_name)
     lines.append('\n')
@@ -136,21 +134,27 @@ def get_header(feature_funcs, relation_name):
     return '\n'.join(lines)
 
 
-def build_feature_file(relation_name, module, input_vals):
+def build_feature_file(relation_name, module, input_vals, class_name):
     """Write an arff file."""
     funcs = list(find_feature_functions(module))
 
     feature_vals = []
-    for features in get_feature_values(funcs, input_vals):
+    classifications = set()
+    for input_val, classification in input_vals:
+        features = [func(input_val) for func in funcs]
+        features.append(escape_string(classification))
+        classifications.add(classification)
         feature_vals.append(','.join(features))
 
-    contents = [get_header(funcs, relation_name)]
+    contents = [get_header(funcs, relation_name, class_name, classifications)]
     contents.extend(feature_vals)
     return '\n'.join(contents)
 
 
-def write_feature_file(out_file_name, relation_name, module, input_vals):
+def write_feature_file(
+        out_file_name, relation_name, module, input_vals, class_name):
     """Write an arff file."""
     with open(out_file_name, 'w') as out_file:
-        out_file.write(build_feature_file(relation_name, module, input_vals))
+        out_file.write(build_feature_file(
+            relation_name, module, input_vals, class_name))
         out_file.write('\n')
