@@ -19,5 +19,6 @@ def iter_text(corpus_dir):
     for author in find_authors(corpus_dir):
         author_dir = os.path.join(corpus_dir, author)
         for text in os.listdir(author_dir):
-            with open(text, 'r') as text_file:
+            text_file = os.path.join(author_dir, text)
+            with open(text_file, 'r') as text_file:
                 yield text_file.read(), author
