@@ -147,6 +147,9 @@ class ArfWriterTest(unittest.TestCase):
         """Test the build_feature_file"""
 
         def fake_module():
+            """This will be the make-believe module full of feature
+            functions for our tests.
+            """
             pass
         fake_module.snakes = arff_writer.FeatureFunction(
                 lambda x: 1,
