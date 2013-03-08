@@ -10,6 +10,11 @@ DATA_LINE = '@DATA'
 ATTRIBUTE_LINE = '@ATTRIBUTE %s %s'
 
 
+def escape_string(string):
+    """Quote and escape the given string."""
+    return '"%s"' % string.replace('"', r'\"')
+
+
 class FeatureFunction(object):
     """Thin wrapper around a function which generates features
     for an ARFF file.
@@ -18,8 +23,8 @@ class FeatureFunction(object):
         'numeric': lambda x: str(float(x)),
         'integer': lambda x: str(float(int(x))),
         'real': lambda x: str(float(x)),
-        'nominal': lambda x: '"%s"' % x.replace('"', r'\"'),
-        'string': lambda x: '"%s"' % x.replace('"', r'\"'),
+        'nominal': escape_string,
+        'string': escape_string,
         'date': lambda x: '"%s"' % x.strftime('%Y-%m-%d %H:%M:%S')
     }
 
@@ -48,8 +53,7 @@ class FeatureFunction(object):
     def attribute_string(self):
         """Return an attribute string for this feature."""
         if self.attribute_type == 'nominal':
-            data_type = '{%s}' % ','.join(
-                    '"%s"' % nominal.replace('"', r'\"') for
+            data_type = '{%s}' % ','.join(escape_string(nominal) for
                     nominal in self.nominals)
         else:
             data_type = self.attribute_type
