@@ -1,0 +1,35 @@
+#! /usr/bin/env python
+
+"""Script for arff file writing."""
+
+
+import argparse
+
+import author_reader
+import arff_writer
+
+
+def build_file(corpus_dir, feature_module, relation_name='author_detection',
+        file_name='feature.arff', class_name='author'):
+    """Write out an arff file."""
+    input_vals = author_reader.iter_text(corpus_dir)
+    module = __import__(feature_module)
+    return arff_writer.write_feature_file(
+        file_name, relation_name, module, input_vals, class_name)
+
+
+def main():
+    """Parse the args and build the file."""
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--corpus_dir', required=True)
+    parser.add_argument('--feature_module', required=True)
+
+    args = parser.parse_args()
+    corpus_dir = args.corpus_dir
+    feature_module = args.feature_module
+
+    return build_file(corpus_dir, feature_module)
+
+
+if __name__ == '__main__':
+    main()
