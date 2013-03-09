@@ -6,9 +6,9 @@ import re
 
 
 GUTENBERG_HEADER_RE = re.compile(
-        r"\*\*\* START OF THIS PROJECT GUTENBERG EBOOK .* \*\*\*")
+        r"\*\*\* START OF THIS PROJECT GUTENBERG EBOOK [^\r\n]* \*\*\*")
 GUTENBERG_FOOTER_RE = re.compile(
-        r"\*\*\* END OF THIS PROJECT GUTENBERG EBOOK .* \*\*\*")
+        r"\*\*\* END OF THIS PROJECT GUTENBERG EBOOK [^\r\n]* \*\*\*")
 
 
 def find_authors(corpus_dir):
