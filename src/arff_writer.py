@@ -12,6 +12,8 @@ ATTRIBUTE_LINE = '@ATTRIBUTE %s %s'
 
 def escape_string(string):
     """Quote and escape the given string."""
+    if not isinstance(string, basestring):
+        string = str(string)
     return '"%s"' % string.replace('"', r'\"')
 
 

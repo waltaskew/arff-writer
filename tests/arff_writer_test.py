@@ -125,6 +125,9 @@ class ArfWriterTest(unittest.TestCase):
         fake_module.cows = arff_writer.FeatureFunction(
                 lambda x: 'a',
                 attribute_name='cows')
+        fake_module.magic = arff_writer.FeatureFunction(
+                lambda x: True,
+                attribute_name='magic')
 
         self.assertEqual(arff_writer.build_feature_file(
             'cake', fake_module, [('a', 'apple'), ('b', 'banana')], 'flavor'),
@@ -132,10 +135,11 @@ class ArfWriterTest(unittest.TestCase):
 
 
 @ATTRIBUTE cows string
+@ATTRIBUTE magic {"True","False"}
 @ATTRIBUTE snakes numeric
 @ATTRIBUTE flavor {"apple","banana"}
 
 
 @DATA
-"a",1.0,"apple"
-"a",1.0,"banana"''')
+"a","True",1.0,"apple"
+"a","True",1.0,"banana"''')
