@@ -2,6 +2,13 @@
 
 
 import os
+import re
+
+
+GUTENBERG_HEADER_RE = re.compile(
+        r"\*\*\* START OF THIS PROJECT GUTENBERG EBOOK .* \*\*\*")
+GUTENBERG_FOOTER_RE = re.compile(
+        r"\*\*\* END OF THIS PROJECT GUTENBERG EBOOK .* \*\*\*")
 
 
 def find_authors(corpus_dir):
@@ -12,13 +19,29 @@ def find_authors(corpus_dir):
             os.path.isdir(os.path.join(corpus_dir, name))]
 
 
+def parse_guttenburg(text):
+    """Remove starting and trailing guttenburg headers and footers if
+    they are present.
+    """
+    header_match = GUTENBERG_HEADER_RE.search(text)
+    if header_match is not None:
+        text = text[header_match.end(0):]
+
+    footer_match = GUTENBERG_FOOTER_RE.search(text)
+    if footer_match is not None:
+        text = text[:footer_match.start(0)]
+
+    return text.strip()
+
+
 def iter_text(corpus_dir):
     """Return a generator yielding a text and its author for all
     entries in corpus_dir.
     """
     for author in find_authors(corpus_dir):
         author_dir = os.path.join(corpus_dir, author)
-        for text in os.listdir(author_dir):
-            text_file = os.path.join(author_dir, text)
+        for text_name in os.listdir(author_dir):
+            text_file = os.path.join(author_dir, text_name)
             with open(text_file, 'r') as text_file:
-                yield text_file.read(), author
+                text = text_file.read()
+                yield parse_guttenburg(text), author
