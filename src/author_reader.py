@@ -42,6 +42,6 @@ def iter_text(corpus_dir):
         author_dir = os.path.join(corpus_dir, author)
         for text_name in os.listdir(author_dir):
             text_file = os.path.join(author_dir, text_name)
-            with open(text_file, 'r') as text_file:
+            with open(text_file, 'rU') as text_file:
                 text = text_file.read()
                 yield parse_guttenburg(text), author
