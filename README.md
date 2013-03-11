@@ -7,6 +7,8 @@ Requirements
 ------------
 Download and install the Weka machine learning suite: http://www.cs.waikato.ac.nz/ml/weka/downloading.html
 
+Download and install Git: http://git-scm.com/downloads
+
 Quick Start
 -----------
 * check out this repository:
