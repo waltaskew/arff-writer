@@ -45,3 +45,23 @@ You'll be able to spy the values your feature functions returned.
 * Select "All" on the Attributes pane
 * On the "Classify" tab, choose and classifier, hit "Start" and see what your correct and incorrect classifications results are!
 
+Details
+-------
+Take a look at the examples/corpus directory in this repository.
+You'll see directories with author names filled with texts each author has written.
+These files and directories are the input to our feature functions.
+
+Each text file in the author sub directories will be passed in-turn to all the feature functions you define.
+The output of these functions is collected in the features.arff file, which we can then use for classification experiments in Weka.
+
+If you would like to add more authors and texts to the project,
+this is as simple as creating a new directory with the author's name and filling it with text files written by that author.
+I have taken the texts in the example corpus from Project Guttenberg and selected texts from some of my favorite authors.
+
+Project Guttenberg files have headers and footers beginning with 
+```
+*** START OF THIS PROJECT GUTENBERG EBOOK <book name> ***
+*** END OF THIS PROJECT GUTENBERG EBOOK <book name> ***
+```
+respectively, which will be parsed out of the files before they are passed to the defined feature functions.
+
