@@ -11,39 +11,44 @@ Download and install Git: http://git-scm.com/downloads
 
 Quick Start
 -----------
-* check out this repository:
-```
-git clone git://github.com/waltaskew/arff-writer.git
-```
-* cd into the wonderful repository world:
-```
-cd arff-writer
-```
-* Write some functions that return useful features that will be used to classify the author of the text.
-Here is an example of what your feature file should look like:
+1. check out this repository:
 
-```python
-import arff_writer
+    ```
+    git clone git://github.com/waltaskew/arff-writer.git
+    ```
+    
+2. cd into the wonderful repository world:
+    ```
+    cd arff-writer
+    ```
+
+3. Write some functions that return useful features that will be used to classify the author of the text.
+    Here is an example of what your feature file should look like:
+
+    ```python
+    import arff_writer
         
-@arff_writer.feature()                  
-def word_length(text):
-    return len(text.split())
-```
-You can define as many feature functions as you want.
-All functions which return feature values must have @arff_writer.feature() directly above their declaration.
+    @arff_writer.feature()                  
+    def word_length(text):
+        return len(text.split())
+    ```
+    
+    You can define as many feature functions as you want.
+    All functions which return feature values must have @arff_writer.feature() directly above their declaration.
 
-* Generate your feautre file.  Assuming the file you wrote in the previous step is named my_features.py:
+4. Generate your feature file.  Assuming the file you wrote in the previous step is named my_features.py:
 
-```python
-PYTHONPATH=.:src/ src/gen_arff --feature_module=my_features --corpus_dir=examples/corpus/
-```
-This will generate a file named "feature.arff" in the current directory.  
-Take a look!
-You'll be able to spy the values your feature functions returned.
+    ```python
+    PYTHONPATH=.:src/ src/gen_arff --feature_module=my_features --corpus_dir=examples/corpus/
+    ```
+    
+    This will generate a file named "feature.arff" in the current directory.  
+    Take a look!
+    You'll be able to spy the values your feature functions returned.
 
-* Start weka, hit "Explorer," then "Open File," and point it towards the feature.arff file you generated.
-* Select "All" on the Attributes pane
-* On the "Classify" tab, choose and classifier, hit "Start" and see what your correct and incorrect classifications results are!
+5. Start weka, hit "Explorer," then "Open File," and point it towards the feature.arff file you generated.
+6. Select "All" on the Attributes pane
+7. On the "Classify" tab, choose and classifier, hit "Start" and see what your correct and incorrect classifications results are!
 
 Details
 -------
