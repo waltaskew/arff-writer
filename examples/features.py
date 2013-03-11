@@ -1,20 +1,22 @@
+"""Example of a feature function file."""
+
+
+from __future__ import division
+
 import arff_writer
 
 
-@arff_writer.feature(fname='echo', returns='string')
-def str_func(x):
-    return x
-
-
-@arff_writer.feature(fname='echo_snakes', returns='string')
-def another_func(x):
-    return x + ' snakes'
+@arff_writer.feature()
+def word_length(text):
+    """Total number of words in the text."""
+    return len(text.split())
 
 
 @arff_writer.feature()
-def just_two(x):
-    return 2
-
-
-def not_a_feature(x):
-    return x + 1
+def lexical_diversity(text):
+    """Total number of words in the text divided by the number of
+    distinct words in the text.
+    """
+    words = [word.lower() for word in text.split()]
+    distinct_words = set(words)
+    return len(distinct_words) / len(words)
