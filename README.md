@@ -32,7 +32,7 @@ def word_length(text):
 You can define as many feature functions as you want.
 All functions which return feature values must have @arff_writer.feature() directly above their declaration.
 
-* Generate your feautre file.  Assuming the file you wrote in step three is named my_features.py:
+* Generate your feautre file.  Assuming the file you wrote in the previous step is named my_features.py:
 
 ```python
 PYTHONPATH=.:src/ src/gen_arff --feature_module=my_features --corpus_dir=examples/corpus/
