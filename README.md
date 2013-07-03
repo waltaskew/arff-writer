@@ -1,7 +1,7 @@
 The Walt Askew Machine Learning Experience™
 ===========================================
 
-In this repository, you will find tools for exploring the wonders of machine learning!  Quick start activate!
+In this repository, you will find tools for exploring the wonders of machine learning!  Quick start time!
 
 Requirements
 ------------
@@ -17,7 +17,7 @@ Quick Start
     git clone git://github.com/waltaskew/arff-writer.git
     ```
     
-2. cd into the wonderful repository world:
+2. cd into this wonderful repository:
     ```
     cd arff-writer
     ```
@@ -29,7 +29,7 @@ Quick Start
     import arff_writer
         
     @arff_writer.feature()                  
-    def word_length(text):
+    def word_count(text):
         return len(text.split())
     ```
     
