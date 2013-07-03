@@ -30,7 +30,8 @@ class FeatureFunction(object):
         'date': lambda x: '"%s"' % x.strftime('%Y-%m-%d %H:%M:%S')
     }
 
-    def __init__(self, func, attribute_name=None,
+    def __init__(
+            self, func, attribute_name=None,
             attribute_type=None, nominals=None):
         if attribute_name is None:
             attribute_name = func.__name__
