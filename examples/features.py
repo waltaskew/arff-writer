@@ -7,7 +7,7 @@ import arff_writer
 
 
 @arff_writer.feature()
-def word_length(text):
+def word_count(text):
     """Total number of words in the text."""
     return len(text.split())
 
